@@ -12,4 +12,9 @@ class Course extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function tags()
+    {
+        $this->belongsToMany(Tag::class);
+    }
 }
