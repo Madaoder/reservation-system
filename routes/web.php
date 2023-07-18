@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
+use Livewire\Commands\StubsCommand;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,16 +16,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [StudentController::class, 'index']);
+Route::get('/search', [studentController::class, 'search']);
+
+Route::prefix('teacher')->middleware([
+    'auth',
+    'is_teacher'
+])->group(function () {
+    Route::get('/dashboard', [TeacherController::class, 'index'])->name('dashboard');
+    Route::post('/create', [TeacherController::class, 'create']);
+    Route::get('/create', function () {
+        return view('teacher.createCourse');
+    });
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
+Route::prefix('student')->middleware([
+    'auth'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::post('/comment/{id}', [StudentController::class, 'comment']);
+    Route::get('/reserve/{id}', [StudentController::class, 'reserve']);
+    Route::delete('/cancel/{id}', [StudentController::class, 'cancel']);
+    Route::get('/myCourse', [StudentController::class, 'check']);
+    Route::get('/comment/{course}', [StudentController::class, 'commentIndex']);
 });

@@ -61,7 +61,10 @@ return [
     |
     */
 
-    'home' => RouteServiceProvider::HOME,
+    'home' => [
+        'student' => RouteServiceProvider::HOME,
+        'teacher' => '/teacher/dashboard'
+    ],
 
     /*
     |--------------------------------------------------------------------------

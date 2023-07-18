@@ -12,7 +12,6 @@ class Comment extends Model
     protected $fillable = [
         'message',
         'student_id',
-        'teacher_id',
         'course_id',
     ];
 }

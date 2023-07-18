@@ -11,10 +11,12 @@ class Course extends Model
 
     protected $fillable = [
         'name',
+        'teacher_id',
+        'start_time'
     ];
 
-    public function tags()
+    public function teacher()
     {
-        $this->belongsToMany(Tag::class);
+        return $this->belongsTo(User::class, 'teacher_id');
     }
 }

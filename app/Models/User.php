@@ -18,7 +18,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id',
+        'is_teacher',
     ];
 
     /**
@@ -51,8 +51,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function role()
+    public function courses()
     {
-        $this->hasOne(Role::class);
+        return $this->hasMany(Course::class, 'teacher_id');
     }
 }
